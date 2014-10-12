@@ -2,58 +2,48 @@ package game;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 public class Spitter {
 	private int centerX = 175;
 	private int centerY = 50;
+
+	// Constants are Here
+	final int MOVESPEED = 5;
+	final int GROUND = 382;
+
 	private boolean jumped = false;
+	private boolean movingLeft = false;
+	private boolean movingRight = false;
+	private boolean ducked = false;
 
 	private int speedX = 0;
 	private int speedY = 1;
-	
-	private boolean readyToFire = false;
 
+	private boolean readyToFire = true;
+
+	private static Background bg1 = SpitterGame.getBg1();
+	private static Background bg2 = SpitterGame.getBg2();
+
+	//ArrayList<Spittle> spittles = new ArrayList<Spittle>();
+	Spittle spittle ;
+	private double angle = 90;
+	private final double ANGLESTEP= 1;
 	
-	ArrayList<Spittle> spittles = new ArrayList<Spittle>();
+	public Spitter()
+	{
+		spittle  = new Spittle(centerX, centerY );
+		spittle.setVisible(false);
+	}
+
 	public void update() {
 
-		// Moves Character or Scrolls Background accordingly.
-	/*	if (speedX < 0) {
-			centerX += speedX;
-		} else if (speedX == 0) {
-			System.out.println("Do not scroll the background.");
-
-		} else {
-			if (centerX <= 150) {
-				centerX += speedX;
-			} else {
-				System.out.println("Scroll Background Here");
-			}
-		}
-
-		// Updates Y Position
-
-		if (centerY + speedY >= 382) {
-			centerY = 382;
-		} else {
-			centerY += speedY;
-		}
-
-		// Handles Jumping
-		if (jumped == true) {
-			speedY += 1;
-
-			if (centerY + speedY >= 382) {
-				centerY = 382;
-				speedY = 0;
-				jumped = false;
-			}
-
-		}
-
-		// Prevents going beyond X coordinate of 0
-		if (centerX + speedX <= 60) {
-			centerX = 61;
-		}*/
+		centerX +=speedX;
+		if(centerX<0)
+			centerX=0;
+		if(centerX>350)
+			centerX=350;
+		speedX = 0;
 	}
 
 	public int getCenterX() {
@@ -70,14 +60,6 @@ public class Spitter {
 
 	public void setCenterY(int centerY) {
 		this.centerY = centerY;
-	}
-
-	public boolean isJumped() {
-		return jumped;
-	}
-
-	public void setJumped(boolean jumped) {
-		this.jumped = jumped;
 	}
 
 	public int getSpeedX() {
@@ -97,30 +79,95 @@ public class Spitter {
 	}
 
 	public void moveRight() {
-		speedX = 6;
+		if (ducked == false) {
+			speedX = MOVESPEED;
+		}
 	}
 
 	public void moveLeft() {
-		speedX = -6;
+		if (ducked == false) {
+			speedX = -MOVESPEED;
+		}
 	}
 
-	public void stop() {
-		speedX = 0;
+	public void stopRight() {
+		setMovingRight(false);
+		stop();
 	}
 
-	public void jump() {
-		if (jumped == false) {
-			speedY = -15;
-			jumped = true;
+	public void stopLeft() {
+		setMovingLeft(false);
+		stop();
+	}
+
+	private void stop() {
+		if (isMovingRight() == false && isMovingLeft() == false) {
+			speedX = 0;
+		}
+
+		if (isMovingRight() == false && isMovingLeft() == true) {
+			moveLeft();
+		}
+
+		if (isMovingRight() == true && isMovingLeft() == false) {
+			moveRight();
 		}
 
 	}
-	
+
+	public boolean isMovingLeft() {
+		return movingLeft;
+	}
+
+	public void setMovingLeft(boolean movingLeft) {
+		this.movingLeft = movingLeft;
+	}
+
+	public boolean isMovingRight() {
+		return movingRight;
+	}
+
+	public void setMovingRight(boolean movingRight) {
+		this.movingRight = movingRight;
+	}
+
+	public boolean isDucked() {
+		return ducked;
+	}
+
+	public void setDucked(boolean ducked) {
+		this.ducked = ducked;
+	}
+
 	public void shoot() {
 		if (readyToFire) {
-			Spittle p = new Spittle(centerX +20, centerY+25);
-			spittles.add(p);
-		}
+			
+			double x,y;
+			
+			x = spittle.getSpeedX() * Math.cos(angle);
+			y = spittle.getSpeedX() * Math.sin(angle);
+			
+			int xC = (int) x;
+			int yC = (int) y;
+//			spittle.setX(centerX+20);
+//			spittle.setY(centerY + 25);
+			spittle.setX(centerX +xC +10);
+  			spittle.setY(centerY + yC+12);
+			spittle.setVisible(true);
+			readyToFire = false;
+		}  
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
+	public double getANGLESTEP() {
+		return ANGLESTEP;
 	}
 
 	public boolean isReadyToFire() {
@@ -131,7 +178,27 @@ public class Spitter {
 		this.readyToFire = readyToFire;
 	}
 
-	public ArrayList<Spittle> getSpittles() {
-		return spittles;
+	public Spittle getSpittle() {
+		return spittle;
+	}
+	
+	public void increaseSpeedSpittle()
+	{
+		spittle.increaseSpeed();
+	}
+	
+	public void decreaseSpeedSpittle()
+	{
+		spittle.decreaseSpeed();
+	}
+	
+	public void increaseAngle()
+	{
+		angle +=ANGLESTEP;
+	}
+	
+	public void decreaseAngle()
+	{
+		angle -=ANGLESTEP;
 	}
 }

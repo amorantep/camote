@@ -8,6 +8,10 @@ public class Spittle {
 
 	private Rectangle r;
 
+	private final int MOVESPEED = 1;
+	private final int MAXSPEED = 60;
+	private final int MINSPEED = 1;
+
 	public Spittle(int startX, int startY) {
 		x = startX;
 		y = startY;
@@ -19,12 +23,14 @@ public class Spittle {
 
 	public void update() {
 		y += speedX;
+		if(r==null)
+			r = new Rectangle(0, 0, 0, 0);
 		r.setBounds(x, y, 5, 10);
-		if (x > 800) {
+		if (y > 600) {
 			visible = false;
 			r = null;
 		}
-		if (x < 801) {
+		if (y < 601) {
 			checkCollision();
 		}
 
@@ -82,5 +88,17 @@ public class Spittle {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public void increaseSpeed() {
+		int s = speedX + MOVESPEED;
+		if (s <= MAXSPEED)
+			setSpeedX(s);
+	}
+
+	public void decreaseSpeed() {
+		int s = speedX - MOVESPEED;
+		if (s >= MINSPEED)
+		setSpeedX(s);
 	}
 }

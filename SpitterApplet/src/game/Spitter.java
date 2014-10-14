@@ -147,8 +147,8 @@ public class Spitter {
 			double radAngle = Math.toRadians(angle);
 			x = spittle.getSpeed()*Math.cos(radAngle);
 			y = spittle.getSpeed()*Math.sin(radAngle);
-			spittle.setX(centerX);
-			spittle.setY(centerY);
+			spittle.setX(centerX+20);
+			spittle.setY(centerY+25);
   			spittle.setVelocityX(x);
   			spittle.setVelocityY(y);
 			spittle.setVisible(true);

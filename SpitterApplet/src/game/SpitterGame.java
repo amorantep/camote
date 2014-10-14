@@ -10,15 +10,21 @@ import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
 
+import framework.Animation;
+
 public class SpitterGame extends Applet implements Runnable, KeyListener {
 
 	private Spitter spitter;
-	private Image image, character, background;
+	private NerdyPerson nerd;
+	
+	private Image image,currentSprite, character, background,nerdy;
 	private Graphics second;
 	private URL base;
-
+	
+	
 	private static Background bg1, bg2;
-
+	private Animation spitterAnim, personAnim;
+	
 	@Override
 	public void init() {
 
@@ -37,6 +43,15 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		// Image Setups
 		character = getImage(base, "data/Mario.PNG");
 		background = getImage(base, "data/background.png");
+		nerdy = getImage(base,"data/person.png");
+		
+		spitterAnim = new Animation();
+		spitterAnim.addFrame(character, 1250);
+		
+		personAnim = new Animation();
+		personAnim.addFrame(nerdy, 100);
+		
+		currentSprite = spitterAnim.getImage();
 	}
 
 	@Override
@@ -44,7 +59,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
 		spitter = new Spitter();
-
+		nerd = new NerdyPerson(200, 500);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -64,8 +79,10 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		while (true) {
 
 			spitter.update();
+			nerd.update();
 			bg1.update();
 			bg2.update();
+			animate();
 			repaint();
 			try {
 				Thread.sleep(17);
@@ -91,6 +108,12 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		}
 	}
 
+	private void animate() {
+		spitterAnim.update(10);
+		personAnim.update(50);
+		
+	}
+
 	@Override
 	public void update(Graphics g) {
 		if (image == null) {
@@ -113,6 +136,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
 
 		g.drawImage(character, spitter.getCenterX(), spitter.getCenterY(), this);
+		g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
 
 		// ArrayList spittles = spitter.getSpittles();
 		// for (int i = 0; i < spittles.size(); i++) {

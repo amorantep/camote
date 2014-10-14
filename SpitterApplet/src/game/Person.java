@@ -4,32 +4,35 @@ import java.awt.Rectangle;
 
 public class Person {
 
-	private int power, speedX, centerX, centerY;
-//	private Background bg = SpitterGame.getBg1();
+	private int power, speedX =5, centerX, centerY;
+	private Background bg = SpitterGame.getBg1();
 
-	public Rectangle r = new Rectangle(0,0,0,0);
+	public Rectangle r = new Rectangle(0, 0, 0, 0);
 	public int health = 5;
-
+	
 	// Behavioral Methods
 	public void update() {
 		centerX += speedX;
-//		speedX = bg.getSpeedX()*5;
-		r.setBounds(centerX - 25, centerY-25, 50, 60);
+		//speedX = speedX -1;
+		r.setBounds(centerX - 25, centerY - 25, 50, 60);
+
+		if(centerX<0 || centerX>400)
+			speedX *= -1;
 		
-/*		if (r.intersects(Robot.yellowRed)){
-			checkCollision();
-		}
-		*/
+		/*
+		 * if (r.intersects(Robot.yellowRed)){ checkCollision(); }
+		 */
 	}
 
-
-
 	private void checkCollision() {
-		if (r.intersects(Spitter.rect) || r.intersects(Spitter.rect2) || r.intersects(Robot.rect3) || r.intersects(Robot.rect4)){
-			System.out.println("collision");
-			
-			}
-		}
+		/*
+		 * if (r.intersects(Spitter.rect) || r.intersects(Spitter.rect2) ||
+		 * r.intersects(Robot.rect3) || r.intersects(Robot.rect4)){
+		 * System.out.println("collision");
+		 * 
+		 * }
+		 */
+	}
 
 	public void die() {
 
@@ -58,8 +61,6 @@ public class Person {
 	public Background getBg() {
 		return bg;
 	}
-
-
 
 	public void setPower(int power) {
 		this.power = power;

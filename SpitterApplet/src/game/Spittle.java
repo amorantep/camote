@@ -3,9 +3,12 @@ package game;
 import java.awt.Rectangle;
 
 public class Spittle {
-	private int x, y, speedX;
+	private int x, y, speed;
+	private double velocityX, velocityY;
+
 	private boolean visible;
 
+	
 	private Rectangle r;
 
 	private final int MOVESPEED = 1;
@@ -15,14 +18,17 @@ public class Spittle {
 	public Spittle(int startX, int startY) {
 		x = startX;
 		y = startY;
-		speedX = 7;
+		speed = 7;
+		velocityX = 0;
+		velocityY = 1;
 		visible = true;
 
 		r = new Rectangle(0, 0, 0, 0);
 	}
 
 	public void update() {
-		y += speedX;
+		y += velocityY;
+		x += velocityX;
 		if(r==null)
 			r = new Rectangle(0, 0, 0, 0);
 		r.setBounds(x, y, 5, 10);
@@ -74,14 +80,31 @@ public class Spittle {
 		this.y = y;
 	}
 
-	public int getSpeedX() {
-		return speedX;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setSpeedX(int speedX) {
-		this.speedX = speedX;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
+	}
+
+	public void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
+
+	
 	public boolean isVisible() {
 		return visible;
 	}
@@ -91,14 +114,14 @@ public class Spittle {
 	}
 
 	public void increaseSpeed() {
-		int s = speedX + MOVESPEED;
+		int s = speed + MOVESPEED;
 		if (s <= MAXSPEED)
-			setSpeedX(s);
+			setSpeed(s);
 	}
 
 	public void decreaseSpeed() {
-		int s = speedX - MOVESPEED;
+		int s = speed - MOVESPEED;
 		if (s >= MINSPEED)
-		setSpeedX(s);
+		setSpeed(s);
 	}
 }

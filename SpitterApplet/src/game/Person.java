@@ -25,7 +25,7 @@ public class Person {
 
 
 	private void checkCollision() {
-		if (r.intersects(Robot.rect) || r.intersects(Robot.rect2) || r.intersects(Robot.rect3) || r.intersects(Robot.rect4)){
+		if (r.intersects(Spitter.rect) || r.intersects(Spitter.rect2) || r.intersects(Robot.rect3) || r.intersects(Robot.rect4)){
 			System.out.println("collision");
 			
 			}

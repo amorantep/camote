@@ -6,7 +6,7 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class Spitter {
 	private int centerX = 175;
-	private int centerY = 50;
+	private int centerY = 115;
 
 	// Constants are Here
 	final int MOVESPEED = 5;
@@ -102,7 +102,7 @@ public class Spitter {
 
 	private void stop() {
 		if (isMovingRight() == false && isMovingLeft() == false) {
-			speedX = 0;
+			speedY = 0;
 		}
 
 		if (isMovingRight() == false && isMovingLeft() == true) {
@@ -140,19 +140,17 @@ public class Spitter {
 	}
 
 	public void shoot() {
-		if (readyToFire) {
+		if (readyToFire && !spittle.isVisible()) {
 			
 			double x,y;
 			
-			x = spittle.getSpeedX() * Math.cos(angle);
-			y = spittle.getSpeedX() * Math.sin(angle);
-			
-			int xC = (int) x;
-			int yC = (int) y;
-//			spittle.setX(centerX+20);
-//			spittle.setY(centerY + 25);
-			spittle.setX(centerX +xC +10);
-  			spittle.setY(centerY + yC+12);
+			double radAngle = Math.toRadians(angle);
+			x = spittle.getSpeed()*Math.cos(radAngle);
+			y = spittle.getSpeed()*Math.sin(radAngle);
+			spittle.setX(centerX);
+			spittle.setY(centerY);
+  			spittle.setVelocityX(x);
+  			spittle.setVelocityY(y);
 			spittle.setVisible(true);
 			readyToFire = false;
 		}  

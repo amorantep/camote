@@ -35,7 +35,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		}
 
 		// Image Setups
-		character = getImage(base, "data/Mario.png");
+		character = getImage(base, "data/Mario.PNG");
 		background = getImage(base, "data/background.png");
 	}
 

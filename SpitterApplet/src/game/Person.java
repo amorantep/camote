@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 public class Person {
 
-	private int power, speedX =5, centerX, centerY;
+	private int power, speedX =1, centerX, centerY;
 	private Background bg = SpitterGame.getBg1();
 
 	public Rectangle r = new Rectangle(0, 0, 0, 0);

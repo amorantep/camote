@@ -29,6 +29,8 @@ public class Spitter {
 	Spittle spittle ;
 	private double angle = 90;
 	private final double ANGLESTEP= 1;
+	private final int MAXANGLE = 130;
+	private final int MINANGLE = 50;
 	
 	public Spitter()
 	{
@@ -192,11 +194,24 @@ public class Spitter {
 	
 	public void increaseAngle()
 	{
-		angle +=ANGLESTEP;
+		double a = angle + ANGLESTEP;
+		if (angle < MAXANGLE){
+			angle = a;
+			System.out.println("angle+ " + angle);
+		} else{
+			System.out.println("angle " + angle);
+		}
+			
 	}
 	
 	public void decreaseAngle()
 	{
-		angle -=ANGLESTEP;
+		double a = angle - ANGLESTEP;
+		if (a > MINANGLE){
+			angle = a;
+			System.out.println("angle- " + angle);
+		} else{
+			System.out.println("angle " + angle);
+		}
 	}
 }

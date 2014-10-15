@@ -15,12 +15,14 @@ import framework.Animation;
 public class SpitterGame extends Applet implements Runnable, KeyListener {
 
 	private Spitter spitter;
-	private NerdyPerson nerd;
+	public static NerdyPerson nerd;
 	
 	private Image image,currentSprite, character, background,nerdy;
 	private Graphics second;
 	private URL base;
 	
+	final static int WIDTH = 400;
+	final static int HEIGTH = 600;
 	
 	private static Background bg1, bg2;
 	private Animation spitterAnim, personAnim;
@@ -28,7 +30,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 	@Override
 	public void init() {
 
-		setSize(400, 600);
+		setSize(WIDTH, HEIGTH);
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
@@ -195,11 +197,9 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 
 		case KeyEvent.VK_A:
 			spitter.increaseAngle();
-			System.out.println("angle+");
 			break;
 		case KeyEvent.VK_B:
 			spitter.decreaseAngle();
-			System.out.println("angle-");
 			break;
 		}
 
@@ -231,12 +231,12 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 			break;
 
 		case KeyEvent.VK_A:
-			spitter.increaseAngle();
-			System.out.println("angle+");
+//			spitter.increaseAngle();
+//			System.out.println("angle+");
 			break;
 		case KeyEvent.VK_B:
-			spitter.decreaseAngle();
-			System.out.println("angle-");
+//			spitter.decreaseAngle();
+//			System.out.println("angle-");
 			break;
 
 		}

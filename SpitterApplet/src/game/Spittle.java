@@ -27,31 +27,29 @@ public class Spittle {
 	}
 
 	public void update() {
+		velocityY += .4;
 		y += velocityY;
 		x += velocityX;
 		if(r==null)
 			r = new Rectangle(0, 0, 0, 0);
 		r.setBounds(x, y, 5, 10);
-		if (y > 600) {
+		if (y < 0 ||  y > SpitterGame.HEIGTH || x <0 || x > SpitterGame.WIDTH) {
 			visible = false;
 			r = null;
 		}
-		if (y < 601) {
+		else if (y < 601) {
 			checkCollision();
 		}
 
 	}
 
 	private void checkCollision() {
-		/*
-		 * if (r.intersects(StartingClass.hb.r)) { visible = false; if
-		 * (StartingClass.hb.health > 0) { StartingClass.hb.health -= 1; } if
-		 * (StartingClass.hb.health == 0) { StartingClass.hb.setCenterX(-100);
-		 * StartingClass.score += 5;
-		 * 
-		 * 
-		 * } }
-		 * 
+		
+		if (r.intersects(SpitterGame.nerd.r)) {
+			visible = false;
+			System.out.println("babeado!");
+		}
+		 /* 
 		 * if (r.intersects(StartingClass.hb2.r)) { visible = false; if
 		 * (StartingClass.hb2.health > 0) { StartingClass.hb2.health -= 1; } if
 		 * (StartingClass.hb2.health == 0) { StartingClass.hb2.setCenterX(-100);
@@ -122,6 +120,6 @@ public class Spittle {
 	public void decreaseSpeed() {
 		int s = speed - MOVESPEED;
 		if (s >= MINSPEED)
-		setSpeed(s);
+			setSpeed(s);
 	}
 }

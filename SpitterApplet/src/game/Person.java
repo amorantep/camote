@@ -14,7 +14,8 @@ public class Person {
 	public void update() {
 		centerX += speedX;
 		//speedX = speedX -1;
-		r.setBounds(centerX - 25, centerY - 25, 50, 60);
+		r.setBounds(centerX , centerY , 50, 50);
+		
 
 		if(centerX<0 || centerX>400)
 			speedX *= -1;

@@ -17,7 +17,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 	private Spitter spitter;
 	public static NerdyPerson nerd;
 	
-	private Image image,currentSprite, character, background,nerdy;
+	private Image image,currentSprite, character, background,nerdy,nerdyDead;
 	private Graphics second;
 	private URL base;
 	
@@ -46,12 +46,14 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		character = getImage(base, "data/Mario.PNG");
 		background = getImage(base, "data/background.png");
 		nerdy = getImage(base,"data/person.png");
+		nerdyDead = getImage(base,"data/personDead.png");
 		
 		spitterAnim = new Animation();
 		spitterAnim.addFrame(character, 1250);
 		
 		personAnim = new Animation();
 		personAnim.addFrame(nerdy, 100);
+		personAnim.addFrame(nerdyDead, 10000);
 		
 		currentSprite = spitterAnim.getImage();
 	}
@@ -137,9 +139,8 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
 
-		g.drawImage(character, spitter.getCenterX(), spitter.getCenterY(), this);
-		g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
-
+	
+	
 		// ArrayList spittles = spitter.getSpittles();
 		// for (int i = 0; i < spittles.size(); i++) {
 		// Spittle p = (Spittle) spittles.get(i);
@@ -154,6 +155,13 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 				g.fillRect(s.getX(), s.getY(), 10, 10);
 			}
 		}
+		
+//		g.drawImage(character, spitter.getCenterX(), spitter.getCenterY(), this);
+			g.drawImage(currentSprite, spitter.getCenterX(), spitter.getCenterY(), this);
+			
+//			g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
+			g.drawImage(personAnim.getImage(), nerd.getCenterX() - 48,
+					nerd.getCenterY() - 48, this);
 
 	}
 
@@ -247,6 +255,11 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static void killNerd() {
+		
+		
 	}
 
 }

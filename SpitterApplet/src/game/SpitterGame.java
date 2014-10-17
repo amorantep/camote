@@ -13,20 +13,24 @@ import java.util.ArrayList;
 import framework.Animation;
 
 public class SpitterGame extends Applet implements Runnable, KeyListener {
-
+	// ////
+	// /deubg
+	int i = 0;
+	// ///
 	private Spitter spitter;
 	public static NerdyPerson nerd;
-	
-	private Image image,currentSprite, character, background,nerdy,nerdyDead;
+
+	private Image image, currentSprite, character, background, nerdy,
+			nerdyDead, nerdyLeft,nerdyLeftDead;
 	private Graphics second;
 	private URL base;
-	
+
 	final static int WIDTH = 400;
 	final static int HEIGTH = 600;
-	
+
 	private static Background bg1, bg2;
-	private Animation spitterAnim, personAnim;
-	
+	private Animation spitterAnim, personAnim, deadAnim;
+
 	@Override
 	public void init() {
 
@@ -45,16 +49,22 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		// Image Setups
 		character = getImage(base, "data/Mario.PNG");
 		background = getImage(base, "data/background.png");
-		nerdy = getImage(base,"data/person.png");
-		nerdyDead = getImage(base,"data/personDead.png");
-		
+		nerdy = getImage(base, "data/person.png");
+		nerdyDead = getImage(base, "data/personDead.png");
+		nerdyLeft = getImage(base, "data/personLeft.png");
+		nerdyLeftDead = getImage(base, "data/personLeftDead.png");
+
 		spitterAnim = new Animation();
 		spitterAnim.addFrame(character, 1250);
-		
+
 		personAnim = new Animation();
-		personAnim.addFrame(nerdy, 100);
-		personAnim.addFrame(nerdyDead, 10000);
-		
+		personAnim.addFrame(nerdy, 500);
+		personAnim.addFrame(nerdyLeft, 500);
+
+		deadAnim = new Animation();
+		deadAnim.addFrame(nerdyDead, 500);
+		deadAnim.addFrame(nerdyLeftDead, 500);
+
 		currentSprite = spitterAnim.getImage();
 	}
 
@@ -115,7 +125,8 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 	private void animate() {
 		spitterAnim.update(10);
 		personAnim.update(50);
-		
+		deadAnim.update(50);
+
 	}
 
 	@Override
@@ -139,8 +150,6 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
 
-	
-	
 		// ArrayList spittles = spitter.getSpittles();
 		// for (int i = 0; i < spittles.size(); i++) {
 		// Spittle p = (Spittle) spittles.get(i);
@@ -155,14 +164,28 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 				g.fillRect(s.getX(), s.getY(), 10, 10);
 			}
 		}
-		
-//		g.drawImage(character, spitter.getCenterX(), spitter.getCenterY(), this);
-			g.drawImage(currentSprite, spitter.getCenterX(), spitter.getCenterY(), this);
-			
-//			g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
-			g.drawImage(personAnim.getImage(), nerd.getCenterX() - 48,
-					nerd.getCenterY() - 48, this);
 
+		// g.drawImage(character, spitter.getCenterX(), spitter.getCenterY(),
+		// this);
+		g.drawImage(currentSprite, spitter.getCenterX(), spitter.getCenterY(),
+				this);
+
+		// g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
+		if (!nerd.isDead())
+			g.drawImage(personAnim.getImage(), nerd.getCenterX(),
+					nerd.getCenterY(), this);
+		g.drawRect(nerd.r.x, nerd.r.y, nerd.r.width, nerd.r.height);
+
+		if (nerd.isDead()) {
+			g.drawImage(deadAnim.getImage(), nerd.getCenterX(),
+					nerd.getCenterY(), this);
+			int i = 0;
+//			while(i<5000000)
+//				i++;
+			 nerd.resurrect();
+			// g.drawImage(personAnim.getImage(), nerd.getCenterX(),
+			// nerd.getCenterY(), this);
+		}
 	}
 
 	public static Background getBg1() {
@@ -178,13 +201,13 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			if(spitter.isReadyToFire())
+			if (spitter.isReadyToFire())
 				spitter.increaseSpeedSpittle();
 			System.out.println("Shoot harder!");
 			break;
 
 		case KeyEvent.VK_DOWN:
-			if(spitter.isReadyToFire())
+			if (spitter.isReadyToFire())
 				spitter.decreaseSpeedSpittle();
 			System.out.println("Shoot Lower!");
 			break;
@@ -239,12 +262,12 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 			break;
 
 		case KeyEvent.VK_A:
-//			spitter.increaseAngle();
-//			System.out.println("angle+");
+			// spitter.increaseAngle();
+			// System.out.println("angle+");
 			break;
 		case KeyEvent.VK_B:
-//			spitter.decreaseAngle();
-//			System.out.println("angle-");
+			// spitter.decreaseAngle();
+			// System.out.println("angle-");
 			break;
 
 		}
@@ -258,8 +281,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 	}
 
 	public static void killNerd() {
-		
-		
+
 	}
 
 }

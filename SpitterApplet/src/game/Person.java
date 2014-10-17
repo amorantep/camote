@@ -4,12 +4,13 @@ import java.awt.Rectangle;
 
 public class Person {
 
-	private int power, speedX =1, centerX, centerY;
+	private int power, speedX =1, centerX, centerY,lastSpeed=1;
 	private Background bg = SpitterGame.getBg1();
 
 	public Rectangle r = new Rectangle(0, 0, 0, 0);
 	public int health = 5;
 	
+	PersonStatus status = PersonStatus.ALIVE;
 	// Behavioral Methods
 	public void update() {
 		centerX += speedX;
@@ -36,7 +37,9 @@ public class Person {
 	}
 
 	public void die() {
-
+		status = PersonStatus.DEAD;
+		lastSpeed=speedX;
+		speedX = 0;
 	}
 
 	public void attack() {
@@ -81,5 +84,17 @@ public class Person {
 
 	public void setBg(Background bg) {
 		this.bg = bg;
+	}
+	
+	public boolean isDead()
+	{
+		if(status == PersonStatus.DEAD)
+			return true;
+		return false;
+	}
+	public void resurrect()
+	{
+		status = PersonStatus.ALIVE;
+		speedX = lastSpeed;
 	}
 }

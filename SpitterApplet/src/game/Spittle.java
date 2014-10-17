@@ -47,7 +47,9 @@ public class Spittle {
 		
 		if (r.intersects(SpitterGame.nerd.r)) {
 			visible = false;
-			SpitterGame.killNerd();
+		//	SpitterGame.killNerd();
+			
+			SpitterGame.nerd.die();
 			System.out.println("babeado!");
 		}
 		 /* 

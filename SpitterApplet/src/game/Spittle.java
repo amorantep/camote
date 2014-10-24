@@ -45,13 +45,13 @@ public class Spittle {
 
 	private void checkCollision() {
 		
-		if (r.intersects(SpitterGame.nerd.r)) {
+	/*	if (r.intersects(SpitterGame.nerd.r)) {
 			visible = false;
 		//	SpitterGame.killNerd();
 			
 			SpitterGame.nerd.die();
 			System.out.println("babeado!");
-		}
+		}*/
 		 /* 
 		 * if (r.intersects(StartingClass.hb2.r)) { visible = false; if
 		 * (StartingClass.hb2.health > 0) { StartingClass.hb2.health -= 1; } if

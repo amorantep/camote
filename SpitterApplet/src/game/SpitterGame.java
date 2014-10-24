@@ -73,7 +73,18 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
 		spitter = new Spitter();
-		nerd = new NerdyPerson(200, 500);
+		//nerd = new NerdyPerson(200, 500);
+		PersonGenerator.createPerson(200, 500);
+		PersonGenerator.createPerson(200, 510);
+		PersonGenerator.createPerson(200, 520);
+		PersonGenerator.createPerson(200, 530);
+		PersonGenerator.createPerson(200, 540);
+		PersonGenerator.createPerson(200, 550);
+		PersonGenerator.createPerson(200, 560);
+		PersonGenerator.createPerson(200, 570);
+		PersonGenerator.createPerson(200, 580);
+		PersonGenerator.createPerson(200, 590);
+		//PersonGenerator.createPerson(200, 600);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -93,7 +104,8 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		while (true) {
 
 			spitter.update();
-			nerd.update();
+			//nerd.update();
+			PersonGenerator.update();
 			bg1.update();
 			bg2.update();
 			animate();
@@ -169,7 +181,7 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 		// this);
 		g.drawImage(currentSprite, spitter.getCenterX(), spitter.getCenterY(),
 				this);
-
+/*
 		// g.drawImage(nerdy, nerd.getCenterX(), nerd.getCenterY(), this);
 		if (!nerd.isDead())
 			g.drawImage(personAnim.getImage(), nerd.getCenterX(),
@@ -185,6 +197,13 @@ public class SpitterGame extends Applet implements Runnable, KeyListener {
 			 nerd.resurrect();
 			// g.drawImage(personAnim.getImage(), nerd.getCenterX(),
 			// nerd.getCenterY(), this);
+		}*/
+		for (int i=0;i<PersonGenerator.size();i++)
+		{
+			Person p = PersonGenerator.people.get(i);
+			g.drawImage(personAnim.getImage(), p.getCenterX(),
+					p.getCenterY(), this);
+			
 		}
 	}
 
